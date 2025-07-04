@@ -1,283 +1,811 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Form with Particle Background</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: 'Segoe UI', sans-serif;
-      overflow: hidden;
-      background: #000;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6 FRAME FILMS OFFICIAL SITE</title>
+    <style>
+        :root {
+            --primary: #000000;
+            --secondary: #ffffff;
+            --accent: #ff5500;
+            --accent-light: #ff8c00;
+            --accent-dark: #e64d00;
+            --film-color: #1a1a1a;
+            --highlight: #ffcc00;
+            --section-bg: rgba(255,255,255,0.95);
+            --rainbow-1: #ff5500;
+            --rainbow-2: #ff8c00;
+            --rainbow-3: #ffcc00;
+            --rainbow-4: #00a8ff;
+            --rainbow-5: #5500ff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            background-color: #111;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1e1e1e 100%);
+        }
 
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      display: none;
-      z-index: 0;
-    }
+        /* Film Strip Background Animation */
+        .film-strip {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.15;
+            background-image: 
+                linear-gradient(to right, var(--film-color) 0.5%, transparent 0.5%, transparent 99.5%, var(--film-color) 99.5%),
+                linear-gradient(to bottom, var(--film-color) 0.5%, transparent 0.5%, transparent 99.5%, var(--film-color) 99.5%);
+            background-size: 40px 40px;
+            animation: filmMove 20s linear infinite;
+        }
 
-    .loader {
-      height: 100%;
-      width: 100%;
-      background: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 10;
-    }
+        @keyframes filmMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 80px 80px; }
+        }
 
-    .spinner {
-      display: flex;
-      gap: 10px;
-    }
+        /* Floating Frame Particles */
+        .frame-particle {
+            position: absolute;
+            background: rgba(255, 85, 0, 0.1);
+            border: 1px solid rgba(255, 85, 0, 0.3);
+            z-index: -1;
+            animation: floatParticle 15s infinite linear;
+        }
 
-    .dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #00fff5, #008fb3);
-      animation: pulse 1.2s ease-in-out infinite both;
-    }
+        @keyframes floatParticle {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-500px) rotate(360deg); opacity: 0; }
+        }
 
-    .dot:nth-child(2) { animation-delay: 0.2s; }
-    .dot:nth-child(3) { animation-delay: 0.4s; }
-    .dot:nth-child(4) { animation-delay: 0.6s; }
-    .dot:nth-child(5) { animation-delay: 0.8s; }
+        /* Film Reel Animation */
+        .film-reel {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            z-index: -1;
+            opacity: 0.1;
+            animation: spinReel 20s linear infinite;
+            filter: drop-shadow(0 0 5px var(--accent));
+        }
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(0.6); opacity: 0.6; }
-      50% { transform: scale(1.2); opacity: 1; }
-    }
+        .film-reel.left {
+            top: 20%;
+            left: 5%;
+            color: var(--accent-light);
+        }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+        .film-reel.right {
+            bottom: 20%;
+            right: 5%;
+            color: var(--accent-dark);
+        }
 
-    .center {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 2;
-    }
+        @keyframes spinReel {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
-    .icon-circle {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      border: 2px solid #00fff5;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      color: #00fff5;
-      background: rgba(0, 0, 0, 0.6);
-      box-shadow: 0 0 12px #00fff5aa;
-      margin: 0 auto 5px auto;
-      animation: glowPulse 2.5s infinite ease-in-out;
-    }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 30px 0;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease-out forwards;
+            animation-delay: 0.3s;
+            background: var(--section-bg);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.1);
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(245,245,245,0.98) 100%);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradientShift 5s infinite alternate;
+        }
 
-    .glow-banner {
-      text-align: center;
-      font-size: 14px;
-      color: #00fff5;
-      margin-top: 26px;
-      margin-bottom: 10px;
-      text-shadow: 0 0 8px #00fff5, 0 0 12px #00fff5cc;
-      animation: glowText 2s ease-in-out infinite alternate;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--highlight));
+            bottom: -5px;
+            left: 0;
+            animation: expandLine 1.5s ease-in-out forwards;
+            animation-delay: 1s;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+            animation-delay: 0.8s;
+            text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+        }
+        
+        .designer {
+            font-style: italic;
+            color: #888;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+            animation-delay: 1.2s;
+        }
+        
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        
+        .nav-item {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, var(--primary) 0%, #333 100%);
+            color: var(--secondary);
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease-out forwards;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .nav-item:hover::before {
+            left: 100%;
+        }
+        
+        .nav-item:nth-child(1) { animation-delay: 0.5s; background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%); }
+        .nav-item:nth-child(2) { animation-delay: 0.6s; background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 100%); }
+        .nav-item:nth-child(3) { animation-delay: 0.7s; background: linear-gradient(135deg, #ff8c00 0%, #ff5500 100%); }
+        .nav-item:nth-child(4) { animation-delay: 0.8s; background: linear-gradient(135deg, var(--accent) 0%, #ff3300 100%); }
+        
+        .nav-item:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(255, 85, 0, 0.3);
+            filter: brightness(1.1);
+        }
+        
+        section {
+            margin: 60px 0;
+            padding: 30px;
+            background: var(--section-bg);
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+        }
 
-    @keyframes glowText {
-      from {
-        text-shadow: 0 0 6px #00fff5, 0 0 10px #00fff5aa;
-      }
-      to {
-        text-shadow: 0 0 12px #00fff5, 0 0 20px #00fff5aa;
-      }
-    }
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--highlight), var(--accent));
+            animation: sectionGlow 3s infinite;
+        }
 
-    @keyframes glowPulse {
-      0%, 100% {
-        box-shadow: 0 0 10px #00fff5, 0 0 20px #00fff5;
-        transform: scale(1);
-      }
-      50% {
-        box-shadow: 0 0 20px #00fff5, 0 0 40px #00fff5aa;
-        transform: scale(1.1);
-      }
-    }
+        @keyframes sectionGlow {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+            background: linear-gradient(90deg, var(--accent), var(--highlight));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--highlight));
+            bottom: 0;
+            left: 0;
+            animation: pulseLine 2s infinite;
+        }
 
-    .form-container {
-      display: none;
-      flex-direction: column;
-      width: 280px;
-      padding: 25px 20px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 15px;
-      box-shadow: 0 8px 32px 0 rgba(0, 255, 245, 0.3);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      animation: fadeIn 1s ease forwards;
-      opacity: 0;
-    }
+        @keyframes pulseLine {
+            0% { width: 50px; }
+            50% { width: 70px; background: var(--highlight); }
+            100% { width: 50px; }
+        }
+        
+        p {
+            margin-bottom: 15px;
+            animation: textFadeIn 1s ease-out;
+            color: #444;
+        }
 
-    .form-container h3 {
-      text-align: center;
-      margin-bottom: 16px;
-      color: #00fff5;
-      font-size: 16px;
-      letter-spacing: 1px;
-    }
+        @keyframes textFadeIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 20px;
+            color: #888;
+            font-size: 0.9rem;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+            animation-delay: 1.5s;
+            background: var(--section-bg);
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
 
-    .form-group {
-      margin-bottom: 12px;
-    }
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), var(--highlight), transparent);
+            animation: footerGlow 3s infinite;
+        }
 
-    .form-group input {
-      width: 100%;
-      padding: 8px;
-      font-size: 12px;
-      border-radius: 6px;
-      border: 1px solid #00fff533;
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      box-sizing: border-box;
-      outline: none;
-      transition: 0.3s ease;
-    }
+        @keyframes footerGlow {
+            0% { opacity: 0; width: 0; left: 50%; }
+            50% { opacity: 1; width: 100%; left: 0; }
+            100% { opacity: 0; width: 0; left: 50%; }
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes expandLine {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        /* Floating animation for logo */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
 
-    .form-group input::placeholder {
-      color: #bbb;
-    }
+        /* Project Card Animation */
+        .project-card {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transform: perspective(1000px) rotateY(0deg);
+            transition: all 0.5s ease;
+            opacity: 0;
+            animation: cardAppear 0.8s forwards;
+            animation-delay: calc(var(--delay) * 0.1s);
+            border-left: 4px solid var(--accent);
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(245,245,245,0.98) 100%);
+            position: relative;
+            overflow: hidden;
+        }
 
-    .form-group input:focus {
-      border: 1px solid #00fff5;
-      background: rgba(0, 0, 0, 0.8);
-    }
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,85,0,0.05) 0%, rgba(255,85,0,0) 100%);
+            z-index: -1;
+        }
 
-    .form-container button {
-      width: 100%;
-      padding: 10px;
-      font-size: 13px;
-      font-weight: bold;
-      border: none;
-      border-radius: 6px;
-      background: #00fff5;
-      color: black;
-      box-shadow: 0 0 10px #00fff588;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
+        @keyframes cardAppear {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
 
-    .form-container button:hover {
-      background: #00e1d2;
-    }
-  </style>
+        .project-card:hover {
+            transform: perspective(1000px) rotateY(5deg) translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-left: 4px solid var(--highlight);
+        }
+
+        .project-card h3 {
+            color: var(--accent-dark);
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+
+        .project-card:hover h3 {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        /* Button Animation */
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(255,85,0,0.3);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: btnPulse 2s infinite;
+        }
+
+        @keyframes btnPulse {
+            0% { box-shadow: 0 0 0 0 rgba(255,85,0,0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255,85,0,0); }
+            100% { box-shadow: 0 0 0 0 rgba(255,85,0,0); }
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255,255,255,0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255,85,0,0.4);
+        }
+
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeOut 1s ease-out forwards;
+            animation-delay: 2s;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: var(--accent);
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; visibility: hidden; }
+        }
+
+        /* New Colorful Elements */
+        .color-spot {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.2;
+            z-index: -1;
+            animation: float 15s infinite linear;
+        }
+
+        .spot-1 {
+            background: var(--accent);
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .spot-2 {
+            background: var(--highlight);
+            bottom: 15%;
+            right: 10%;
+            animation-delay: 2s;
+            animation-direction: reverse;
+        }
+
+        .spot-3 {
+            background: #00a8ff;
+            top: 60%;
+            left: 30%;
+            animation-delay: 4s;
+        }
+        
+        /* Phone Number Style */
+        .phone-number {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background: rgba(255,85,0,0.1);
+            border-radius: 20px;
+            color: var(--accent-dark);
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .phone-number:hover {
+            background: rgba(255,85,0,0.2);
+            transform: scale(1.05);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-menu {
+                gap: 15px;
+            }
+            
+            .nav-item {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+
+            .film-reel {
+                width: 60px;
+                height: 60px;
+            }
+
+            .color-spot {
+                width: 150px;
+                height: 150px;
+                filter: blur(40px);
+            }
+        }
+    </style>
 </head>
 <body>
-
-  <!-- Loader -->
-  <div class="loader" id="loader">
-    <div class="spinner">
-      <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <!-- Loading Animation -->
+    <div class="loader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <h2 style="color: white; text-shadow: 0 0 10px var(--accent);">6 FRAME FILMS</h2>
+        </div>
     </div>
-  </div>
 
-  <!-- Particle Background -->
-  <canvas id="particleCanvas"></canvas>
+    <!-- Color Spots -->
+    <div class="color-spot spot-1"></div>
+    <div class="color-spot spot-2"></div>
+    <div class="color-spot spot-3"></div>
 
-  <!-- Form -->
-  <div class="center">
-    <div class="form-container" id="form">
-      <div class="icon-circle">💎</div>
-      <div class="glow-banner">WELLCOME 6 FRAME FILMS OFFCIAL SITE</div>
-      <h3>ENTER DETAILS</h3>
-      <div class="form-group">
-        <input type="text" placeholder="FULL NAME" />
-      </div>
-      <div class="form-group">
-        <input type="tel" placeholder="WHATSAPP NUMBER" />
-      </div>
-      <div class="form-group">
-        <input type="email" placeholder="EMAIL ADDRESS" />
-      </div>
-      <div class="form-group">
-        <input type="password" placeholder="CREATE PASSWORD" />
-      </div>
-      <button type="button">SUBMIT</button>
+    <!-- Film Strip Background -->
+    <div class="film-strip"></div>
+    
+    <!-- Film Reels -->
+    <div class="film-reel left">🎞️</div>
+    <div class="film-reel right">🎞️</div>
+    
+    <!-- Floating Frame Particles -->
+    <div id="particles-container"></div>
+
+    <div class="container">
+        <header>
+            <h1 class="floating">6 FRAME FILMS</h1>
+            <p class="tagline">Your gateway to powerful short films and creative storytelling</p>
+            <p class="designer">Designed by Theekshana</p>
+        </header>
+        
+        <main>
+            <div class="nav-menu">
+                <a href="#about" class="nav-item">ABOUT</a>
+                <a href="#projects" class="nav-item">PROJECTS</a>
+                <a href="#contact" class="nav-item">CONTACT</a>
+                <a href="#tickets" class="nav-item">BOOK TICKETS</a>
+            </div>
+            
+            <section id="about">
+                <h2>About Us</h2>
+                <p>6 Frame Films is dedicated to creating impactful short films that push the boundaries of visual storytelling. Our team of passionate filmmakers brings unique perspectives to every project.</p>
+                <div class="project-card" style="--delay: 1">
+                    <h3>Our Mission</h3>
+                    <p>To tell compelling stories that resonate with audiences through innovative filmmaking techniques.</p>
+                </div>
+                <div class="project-card" style="--delay: 2">
+                    <h3>Our Team</h3>
+                    <p>A collective of award-winning directors, cinematographers, and editors working together.</p>
+                </div>
+                <button class="btn">Learn More</button>
+            </section>
+            
+            <section id="projects">
+                <h2>Our Projects</h2>
+                <p>Explore our collection of award-winning short films that have captivated audiences worldwide.</p>
+                <div class="project-card" style="--delay: 1">
+                    <h3>The Last Frame</h3>
+                    <p>An experimental short film exploring memory and loss through fragmented narratives.</p>
+                </div>
+                <div class="project-card" style="--delay: 2">
+                    <h3>Six Seconds</h3>
+                    <p>A thriller told in six-second segments that challenge conventional storytelling.</p>
+                </div>
+                <div class="project-card" style="--delay: 3">
+                    <h3>Frame by Frame</h3>
+                    <p>A documentary about the art of animation and its impact on modern cinema.</p>
+                </div>
+                <button class="btn">View All Projects</button>
+            </section>
+            
+            <section id="contact">
+                <h2>Contact Us</h2>
+                <p>Get in touch to collaborate or learn more about our work.</p>
+                <div class="project-card" style="--delay: 1">
+                    <h3>Phone</h3>
+                    <p>Call us at: <a href="tel:+94778080044" class="phone-number">+94 77 808 0044</a></p>
+                </div>
+                <button class="btn">Send Message</button>
+            </section>
+            
+            <section id="tickets">
+                <h2>Book Tickets</h2>
+                <p>Reserve your seats for upcoming screenings and special events.</p>
+                <div class="project-card" style="--delay: 1">
+                    <h3>Summer Shorts Festival</h3>
+                    <p>June 15-20, 2023 | Downtown Cinema</p>
+                </div>
+                <div class="project-card" style="--delay: 2">
+                    <h3>Director's Cut Night</h3>
+                    <p>July 5, 2023 | Art House Theater</p>
+                </div>
+                <button class="btn">Book Now</button>
+            </section>
+        </main>
+        
+        <footer>
+            <p>© 2023 6 Frame Films. All rights reserved.</p>
+            <p>This website is owned by Theekshana</p>
+        </footer>
     </div>
-  </div>
 
-  <!-- Script -->
-  <script>
-    setTimeout(() => {
-      document.getElementById('loader').style.display = 'none';
-      document.getElementById('form').style.display = 'flex';
-      document.getElementById('particleCanvas').style.display = 'block';
-      startParticles();
-    }, 10000);
+    <script>
+        // Create floating frame particles
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            const particleCount = 20;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('frame-particle');
+                
+                // Random size (between 20px and 60px)
+                const size = Math.random() * 40 + 20;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size * 0.7}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.bottom = `-${size}px`;
+                
+                // Random animation duration (between 10s and 25s)
+                const duration = Math.random() * 15 + 10;
+                particle.style.animationDuration = `${duration}s`;
+                
+                // Random delay
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                // Random color
+                const colors = ['#ff5500', '#ff8c00', '#ffcc00', '#ff3300'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.borderColor = `${randomColor}60`;
+                particle.style.backgroundColor = `${randomColor}20`;
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        // Scroll animation for sections
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            
+            const sections = document.querySelectorAll('section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        
+                        // Animate the cards within the section
+                        const cards = entry.target.querySelectorAll('.project-card');
+                        cards.forEach(card => {
+                            card.style.animationDelay = card.style.getPropertyValue('--delay') + 's';
+                        });
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+            // Smooth scrolling for navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
 
-    function startParticles() {
-      const canvas = document.getElementById("particleCanvas");
-      const ctx = canvas.getContext("2d");
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-
-      const particles = [];
-      const particleCount = 100;
-
-      for (let i = 0; i < particleCount; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          size: Math.random() * 3,
-          speedX: Math.random() * 0.5 - 0.25,
-          speedY: Math.random() * 0.5 - 0.25
+            // Button ripple effect
+            document.querySelectorAll('.btn').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Create ripple effect
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('ripple-effect');
+                    this.appendChild(ripple);
+                    
+                    // Remove ripple after animation
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
         });
-      }
 
-      function animateParticles() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "white";
-
-        particles.forEach(p => {
-          p.x += p.speedX;
-          p.y += p.speedY;
-
-          if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
-          if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
-
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-          ctx.fill();
-        });
-
-        requestAnimationFrame(animateParticles);
-      }
-
-      animateParticles();
-
-      window.addEventListener("resize", () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      });
-    }
-  </script>
+        // Typewriter effect for tagline
+        const tagline = document.querySelector('.tagline');
+        if (tagline) {
+            const text = tagline.textContent;
+            tagline.textContent = '';
+            
+            let i = 0;
+            const typeWriter = setInterval(() => {
+                if (i < text.length) {
+                    tagline.textContent += text.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(typeWriter);
+                }
+            }, 50);
+        }
+    </script>
 </body>
 </html>
