@@ -1,811 +1,480 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="si">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>6 FRAME FILMS OFFICIAL SITE</title>
+    <title>6 FRAME FILMS</title>
     <style>
         :root {
-            --primary: #000000;
-            --secondary: #ffffff;
-            --accent: #ff5500;
-            --accent-light: #ff8c00;
-            --accent-dark: #e64d00;
-            --film-color: #1a1a1a;
-            --highlight: #ffcc00;
-            --section-bg: rgba(255,255,255,0.95);
-            --rainbow-1: #ff5500;
-            --rainbow-2: #ff8c00;
-            --rainbow-3: #ffcc00;
-            --rainbow-4: #00a8ff;
-            --rainbow-5: #5500ff;
+            --primary: #00f5d4;
+            --secondary: #9b5de5;
+            --dark: #000000;
+            --light: #f8f9fa;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
         
         body {
-            color: #333;
-            line-height: 1.6;
-            overflow-x: hidden;
-            position: relative;
-            background-color: #111;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1e1e1e 100%);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-color: #000000;
+            overflow: hidden;
         }
 
-        /* Film Strip Background Animation */
-        .film-strip {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .page-container {
+            display: none;
             width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.15;
-            background-image: 
-                linear-gradient(to right, var(--film-color) 0.5%, transparent 0.5%, transparent 99.5%, var(--film-color) 99.5%),
-                linear-gradient(to bottom, var(--film-color) 0.5%, transparent 0.5%, transparent 99.5%, var(--film-color) 99.5%);
-            background-size: 40px 40px;
-            animation: filmMove 20s linear infinite;
-        }
-
-        @keyframes filmMove {
-            0% { background-position: 0 0; }
-            100% { background-position: 80px 80px; }
-        }
-
-        /* Floating Frame Particles */
-        .frame-particle {
-            position: absolute;
-            background: rgba(255, 85, 0, 0.1);
-            border: 1px solid rgba(255, 85, 0, 0.3);
-            z-index: -1;
-            animation: floatParticle 15s infinite linear;
-        }
-
-        @keyframes floatParticle {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.3; }
-            90% { opacity: 0.3; }
-            100% { transform: translateY(-500px) rotate(360deg); opacity: 0; }
-        }
-
-        /* Film Reel Animation */
-        .film-reel {
-            position: fixed;
-            width: 100px;
-            height: 100px;
-            z-index: -1;
-            opacity: 0.1;
-            animation: spinReel 20s linear infinite;
-            filter: drop-shadow(0 0 5px var(--accent));
-        }
-
-        .film-reel.left {
-            top: 20%;
-            left: 5%;
-            color: var(--accent-light);
-        }
-
-        .film-reel.right {
-            bottom: 20%;
-            right: 5%;
-            color: var(--accent-dark);
-        }
-
-        @keyframes spinReel {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
+            height: 100vh;
             position: relative;
         }
-        
-        header {
-            text-align: center;
-            margin-bottom: 50px;
-            padding: 30px 0;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s ease-out forwards;
-            animation-delay: 0.3s;
-            background: var(--section-bg);
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,255,255,0.1);
-            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(245,245,245,0.98) 100%);
-        }
-        
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            color: var(--primary);
-            position: relative;
-            display: inline-block;
-            background: linear-gradient(90deg, var(--accent), var(--accent-light));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: gradientShift 5s infinite alternate;
-        }
 
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
-        }
-        
-        h1::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent), var(--highlight));
-            bottom: -5px;
-            left: 0;
-            animation: expandLine 1.5s ease-in-out forwards;
-            animation-delay: 1s;
-        }
-        
-        .tagline {
-            font-size: 1.2rem;
-            color: #666;
-            margin-bottom: 30px;
-            opacity: 0;
-            animation: fadeIn 1s ease-out forwards;
-            animation-delay: 0.8s;
-            text-shadow: 0 1px 1px rgba(0,0,0,0.1);
-        }
-        
-        .designer {
-            font-style: italic;
-            color: #888;
-            margin-top: 20px;
-            opacity: 0;
-            animation: fadeIn 1s ease-out forwards;
-            animation-delay: 1.2s;
-        }
-        
-        .nav-menu {
+        #home-page {
             display: flex;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
-            gap: 30px;
-            margin: 40px 0;
-            flex-wrap: wrap;
-        }
-        
-        .nav-item {
-            padding: 12px 25px;
-            background: linear-gradient(135deg, var(--primary) 0%, #333 100%);
-            color: var(--secondary);
-            text-decoration: none;
-            border-radius: 4px;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s ease-out forwards;
-            font-weight: 500;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        
-        .nav-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: 0.5s;
-        }
-        
-        .nav-item:hover::before {
-            left: 100%;
-        }
-        
-        .nav-item:nth-child(1) { animation-delay: 0.5s; background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%); }
-        .nav-item:nth-child(2) { animation-delay: 0.6s; background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 100%); }
-        .nav-item:nth-child(3) { animation-delay: 0.7s; background: linear-gradient(135deg, #ff8c00 0%, #ff5500 100%); }
-        .nav-item:nth-child(4) { animation-delay: 0.8s; background: linear-gradient(135deg, var(--accent) 0%, #ff3300 100%); }
-        
-        .nav-item:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 8px 20px rgba(255, 85, 0, 0.3);
-            filter: brightness(1.1);
-        }
-        
-        section {
-            margin: 60px 0;
-            padding: 30px;
-            background: var(--section-bg);
-            border-radius: 8px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease-out;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent), var(--highlight), var(--accent));
-            animation: sectionGlow 3s infinite;
-        }
-
-        @keyframes sectionGlow {
-            0% { opacity: 0.5; }
-            50% { opacity: 1; }
-            100% { opacity: 0.5; }
-        }
-        
-        section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        h2 {
-            color: var(--primary);
-            margin-bottom: 20px;
-            position: relative;
-            padding-bottom: 10px;
-            background: linear-gradient(90deg, var(--accent), var(--highlight));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        
-        h2::after {
-            content: '';
-            position: absolute;
-            width: 50px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent), var(--highlight));
-            bottom: 0;
-            left: 0;
-            animation: pulseLine 2s infinite;
-        }
-
-        @keyframes pulseLine {
-            0% { width: 50px; }
-            50% { width: 70px; background: var(--highlight); }
-            100% { width: 50px; }
-        }
-        
-        p {
-            margin-bottom: 15px;
-            animation: textFadeIn 1s ease-out;
-            color: #444;
-        }
-
-        @keyframes textFadeIn {
-            from { opacity: 0; transform: translateX(-10px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        
-        footer {
-            text-align: center;
-            margin-top: 60px;
-            padding: 20px;
-            color: #888;
-            font-size: 0.9rem;
-            opacity: 0;
-            animation: fadeIn 1s ease-out forwards;
-            animation-delay: 1.5s;
-            background: var(--section-bg);
-            border-radius: 10px;
-            position: relative;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent), var(--highlight), transparent);
-            animation: footerGlow 3s infinite;
-        }
-
-        @keyframes footerGlow {
-            0% { opacity: 0; width: 0; left: 50%; }
-            50% { opacity: 1; width: 100%; left: 0; }
-            100% { opacity: 0; width: 0; left: 50%; }
-        }
-        
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes expandLine {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-        
-        /* Floating animation for logo */
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        .floating {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        /* Project Card Animation */
-        .project-card {
-            background: white;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 8px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            transform: perspective(1000px) rotateY(0deg);
-            transition: all 0.5s ease;
-            opacity: 0;
-            animation: cardAppear 0.8s forwards;
-            animation-delay: calc(var(--delay) * 0.1s);
-            border-left: 4px solid var(--accent);
-            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(245,245,245,0.98) 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(255,85,0,0.05) 0%, rgba(255,85,0,0) 100%);
-            z-index: -1;
-        }
-
-        @keyframes cardAppear {
-            from { opacity: 0; transform: translateY(20px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        .project-card:hover {
-            transform: perspective(1000px) rotateY(5deg) translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            border-left: 4px solid var(--highlight);
-        }
-
-        .project-card h3 {
-            color: var(--accent-dark);
-            margin-bottom: 10px;
-            transition: all 0.3s;
-        }
-
-        .project-card:hover h3 {
-            color: var(--accent);
-            transform: translateX(5px);
-        }
-
-        /* Button Animation */
-        .btn {
-            display: inline-block;
-            padding: 12px 25px;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
             color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .home-logo {
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .home-logo h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px rgba(0, 245, 212, 0.7);
+        }
+
+        .home-logo p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+        }
+
+        .home-content {
+            max-width: 600px;
+            margin-bottom: 30px;
+        }
+
+        .home-content h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .home-content p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .login-btn {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             border: none;
-            border-radius: 4px;
+            border-radius: 50px;
+            color: var(--dark);
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(255,85,0,0.3);
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 1px solid rgba(255,255,255,0.2);
-            animation: btnPulse 2s infinite;
+            box-shadow: 0 4px 15px rgba(155, 93, 229, 0.4);
+            transition: all 0.3s ease;
         }
 
-        @keyframes btnPulse {
-            0% { box-shadow: 0 0 0 0 rgba(255,85,0,0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(255,85,0,0); }
-            100% { box-shadow: 0 0 0 0 rgba(255,85,0,0); }
-        }
-
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 5px;
-            height: 5px;
-            background: rgba(255,255,255,0.5);
-            opacity: 0;
-            border-radius: 100%;
-            transform: scale(1, 1) translate(-50%);
-            transform-origin: 50% 50%;
-        }
-
-        .btn:focus:not(:active)::after {
-            animation: ripple 1s ease-out;
-        }
-
-        @keyframes ripple {
-            0% {
-                transform: scale(0, 0);
-                opacity: 0.5;
-            }
-            100% {
-                transform: scale(20, 20);
-                opacity: 0;
-            }
-        }
-
-        .btn:hover {
-            background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 100%);
+        .login-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(255,85,0,0.4);
+            box-shadow: 0 8px 25px rgba(155, 93, 229, 0.6);
         }
 
-        /* Loading Animation */
-        .loader {
+        #loader {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.9);
+            background: #000;
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            animation: fadeOut 1s ease-out forwards;
-            animation-delay: 2s;
+            flex-direction: column;
         }
 
-        .loader-content {
-            text-align: center;
+        .spinner {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
-        .loader-spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(255,255,255,0.3);
+        .dot {
+            width: 15px;
+            height: 15px;
             border-radius: 50%;
-            border-top-color: var(--accent);
-            animation: spin 1s ease-in-out infinite;
-            margin: 0 auto 20px;
+            background: radial-gradient(circle at 30% 30%, #00fff5, #008fb3);
+            box-shadow: 0 0 10px #00fff5;
+            animation: pulse 1.2s ease-in-out infinite both;
+        }
+
+        .dot:nth-child(1) { animation-delay: 0s; }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+        .dot:nth-child(4) { animation-delay: 0.6s; }
+        .dot:nth-child(5) { animation-delay: 0.8s; }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(0.6);
+                opacity: 0.6;
+                box-shadow: 0 0 5px #00fff5;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+                box-shadow: 0 0 15px #00fff5;
+            }
+        }
+
+        .loading-text {
+            color: #00fff5;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            text-shadow: 0 0 10px rgba(0, 255, 245, 0.5);
+            animation: fadeInOut 2s infinite;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        #login-page {
+            display: none;
+            width: 100%;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            width: 90%;
+            max-width: 350px;
+            background: rgba(15, 15, 15, 0.95);
+            border-radius: 14px;
+            padding: 30px;
+            box-shadow: 0 8px 30px rgba(0, 245, 212, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .login-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 245, 212, 0.25);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 25px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo h1 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            text-shadow: 0 0 10px rgba(0, 245, 212, 0.5);
+            letter-spacing: 1px;
+        }
+
+        .logo p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+            position: relative;
+            animation: slideIn 0.8s ease-out;
+            animation-fill-mode: backwards;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .input-group:nth-child(1) { animation-delay: 0.2s; }
+        .input-group:nth-child(2) { animation-delay: 0.3s; }
+        .input-group:nth-child(3) { animation-delay: 0.4s; }
+        .input-group:nth-child(4) { animation-delay: 0.5s; }
+
+        .input-group label {
+            display: block;
+            color: var(--light);
+            margin-bottom: 6px;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            color: var(--light);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(0, 245, 212, 0.3);
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border: none;
+            border-radius: 50px;
+            color: var(--dark);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 4px 15px rgba(155, 93, 229, 0.4);
+            transition: all 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+            transform-style: preserve-3d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            z-index: -1;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(155, 93, 229, 0.6);
+        }
+
+        .submit-btn:hover::before {
+            opacity: 1;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        .submit-btn:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .submit-btn .btn-text {
+            display: inline-block;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        .submit-btn:hover .btn-text {
+            transform: translateX(5px);
+        }
+
+        .submit-btn .arrow {
+            position: absolute;
+            right: 20px;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        .submit-btn:hover .arrow {
+            opacity: 1;
+            right: 15px;
+            animation: arrowPulse 1s infinite;
+        }
+
+        @keyframes arrowPulse {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(3px); }
+        }
+
+        .submit-btn.loading {
+            pointer-events: none;
+        }
+
+        .submit-btn.loading .btn-text,
+        .submit-btn.loading .arrow {
+            opacity: 0;
+        }
+
+        .submit-btn.loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: var(--dark);
+            animation: spin 1s linear infinite;
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        @keyframes fadeOut {
-            to { opacity: 0; visibility: hidden; }
+        .submit-btn.success {
+            background: linear-gradient(135deg, #00d4a7 0%, #00b392 100%);
         }
 
-        /* New Colorful Elements */
-        .color-spot {
+        .submit-btn.success::before {
+            display: none;
+        }
+
+        .submit-btn.success .checkmark {
             position: absolute;
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            filter: blur(60px);
-            opacity: 0.2;
-            z-index: -1;
-            animation: float 15s infinite linear;
-        }
-
-        .spot-1 {
-            background: var(--accent);
-            top: 20%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .spot-2 {
-            background: var(--highlight);
-            bottom: 15%;
-            right: 10%;
-            animation-delay: 2s;
-            animation-direction: reverse;
-        }
-
-        .spot-3 {
-            background: #00a8ff;
-            top: 60%;
-            left: 30%;
-            animation-delay: 4s;
-        }
-        
-        /* Phone Number Style */
-        .phone-number {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 8px 15px;
-            background: rgba(255,85,0,0.1);
-            border-radius: 20px;
-            color: var(--accent-dark);
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        .phone-number:hover {
-            background: rgba(255,85,0,0.2);
-            transform: scale(1.05);
-        }
-        
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .nav-menu {
-                gap: 15px;
-            }
-            
-            .nav-item {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
-
-            .film-reel {
-                width: 60px;
-                height: 60px;
-            }
-
-            .color-spot {
-                width: 150px;
-                height: 150px;
-                filter: blur(40px);
-            }
+            opacity: 1;
+            font-size: 1.2rem;
         }
     </style>
 </head>
 <body>
-    <!-- Loading Animation -->
-    <div class="loader">
-        <div class="loader-content">
-            <div class="loader-spinner"></div>
-            <h2 style="color: white; text-shadow: 0 0 10px var(--accent);">6 FRAME FILMS</h2>
+    <div id="loader">
+        <div class="spinner">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="loading-text"></div>
+    </div>
+
+    <div id="home-page" class="page-container">
+        <div class="home-logo">
+            <h1>6 FRAME FILMS OFFICIAL</h1>
+            <p></p>
+        </div>
+        <div class="home-content">
+            <h2>WELLCOME OFFICIAL SITE</h2>
+            <p>Experience the best in film production and content creation. Join our community to access exclusive features and content.
+          
+          <p>
+          
+            <button class="login-btn" id="goToLogin">Login To Your Account</button>
         </div>
     </div>
 
-    <!-- Color Spots -->
-    <div class="color-spot spot-1"></div>
-    <div class="color-spot spot-2"></div>
-    <div class="color-spot spot-3"></div>
-
-    <!-- Film Strip Background -->
-    <div class="film-strip"></div>
-    
-    <!-- Film Reels -->
-    <div class="film-reel left">🎞️</div>
-    <div class="film-reel right">🎞️</div>
-    
-    <!-- Floating Frame Particles -->
-    <div id="particles-container"></div>
-
-    <div class="container">
-        <header>
-            <h1 class="floating">6 FRAME FILMS</h1>
-            <p class="tagline">Your gateway to powerful short films and creative storytelling</p>
-            <p class="designer">Designed by Theekshana</p>
-        </header>
-        
-        <main>
-            <div class="nav-menu">
-                <a href="#about" class="nav-item">ABOUT</a>
-                <a href="#projects" class="nav-item">PROJECTS</a>
-                <a href="#contact" class="nav-item">CONTACT</a>
-                <a href="#tickets" class="nav-item">BOOK TICKETS</a>
+    <div id="login-page" class="page-container">
+        <div class="login-container" id="loginContainer">
+            <div class="logo">
+                <h1>6 FRAME FILMS</h1>
+                <p>OFFICIAL MEMBER LOGIN</p>
             </div>
-            
-            <section id="about">
-                <h2>About Us</h2>
-                <p>6 Frame Films is dedicated to creating impactful short films that push the boundaries of visual storytelling. Our team of passionate filmmakers brings unique perspectives to every project.</p>
-                <div class="project-card" style="--delay: 1">
-                    <h3>Our Mission</h3>
-                    <p>To tell compelling stories that resonate with audiences through innovative filmmaking techniques.</p>
+            <form>
+                <div class="input-group">
+                    <label for="fullname">Full Name</label>
+                    <input type="text" id="fullname" placeholder="Your Full Name" required>
                 </div>
-                <div class="project-card" style="--delay: 2">
-                    <h3>Our Team</h3>
-                    <p>A collective of award-winning directors, cinematographers, and editors working together.</p>
+                <div class="input-group">
+                    <label for="whatsapp">Whatsapp Number</labgel>
+                    <input type="tel" id="whatsapp" placeholder="Your Whatsapp Number" required>
                 </div>
-                <button class="btn">Learn More</button>
-            </section>
-            
-            <section id="projects">
-                <h2>Our Projects</h2>
-                <p>Explore our collection of award-winning short films that have captivated audiences worldwide.</p>
-                <div class="project-card" style="--delay: 1">
-                    <h3>The Last Frame</h3>
-                    <p>An experimental short film exploring memory and loss through fragmented narratives.</p>
+                <div class="input-group">
+                    <label for="email">Gmail Address</label>
+                    <input type="email" id="email" placeholder="Your Gmail Address" required>
                 </div>
-                <div class="project-card" style="--delay: 2">
-                    <h3>Six Seconds</h3>
-                    <p>A thriller told in six-second segments that challenge conventional storytelling.</p>
+                <div class="input-group">
+                    <label for="password">Create Password</label>
+                    <input type="password" id="password" placeholder="Your Create Password" required>
                 </div>
-                <div class="project-card" style="--delay: 3">
-                    <h3>Frame by Frame</h3>
-                    <p>A documentary about the art of animation and its impact on modern cinema.</p>
-                </div>
-                <button class="btn">View All Projects</button>
-            </section>
-            
-            <section id="contact">
-                <h2>Contact Us</h2>
-                <p>Get in touch to collaborate or learn more about our work.</p>
-                <div class="project-card" style="--delay: 1">
-                    <h3>Phone</h3>
-                    <p>Call us at: <a href="tel:+94778080044" class="phone-number">+94 77 808 0044</a></p>
-                </div>
-                <button class="btn">Send Message</button>
-            </section>
-            
-            <section id="tickets">
-                <h2>Book Tickets</h2>
-                <p>Reserve your seats for upcoming screenings and special events.</p>
-                <div class="project-card" style="--delay: 1">
-                    <h3>Summer Shorts Festival</h3>
-                    <p>June 15-20, 2023 | Downtown Cinema</p>
-                </div>
-                <div class="project-card" style="--delay: 2">
-                    <h3>Director's Cut Night</h3>
-                    <p>July 5, 2023 | Art House Theater</p>
-                </div>
-                <button class="btn">Book Now</button>
-            </section>
-        </main>
-        
-        <footer>
-            <p>© 2023 6 Frame Films. All rights reserved.</p>
-            <p>This website is owned by Theekshana</p>
-        </footer>
+                <button type="submit" class="submit-btn" id="loginBtn">
+                    <span class="btn-text">LOGIN</span>
+                    <span class="arrow">→</span>
+                    <span class="checkmark" style="display:none">✓</span>
+                </button>
+            </form>
+        </div>
     </div>
 
     <script>
-        // Create floating frame particles
-        function createParticles() {
-            const container = document.getElementById('particles-container');
-            const particleCount = 20;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('frame-particle');
-                
-                // Random size (between 20px and 60px)
-                const size = Math.random() * 40 + 20;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size * 0.7}px`;
-                
-                // Random position
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.bottom = `-${size}px`;
-                
-                // Random animation duration (between 10s and 25s)
-                const duration = Math.random() * 15 + 10;
-                particle.style.animationDuration = `${duration}s`;
-                
-                // Random delay
-                particle.style.animationDelay = `${Math.random() * 5}s`;
-                
-                // Random color
-                const colors = ['#ff5500', '#ff8c00', '#ffcc00', '#ff3300'];
-                const randomColor = colors[Math.floor(Math.random() * colors.length)];
-                particle.style.borderColor = `${randomColor}60`;
-                particle.style.backgroundColor = `${randomColor}20`;
-                
-                container.appendChild(particle);
-            }
-        }
-        
-        // Scroll animation for sections
-        document.addEventListener('DOMContentLoaded', function() {
-            createParticles();
-            
-            const sections = document.querySelectorAll('section');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        
-                        // Animate the cards within the section
-                        const cards = entry.target.querySelectorAll('.project-card');
-                        cards.forEach(card => {
-                            card.style.animationDelay = card.style.getPropertyValue('--delay') + 's';
-                        });
-                    }
-                });
-            }, { threshold: 0.1 });
-            
-            sections.forEach(section => {
-                observer.observe(section);
-            });
-            
-            // Smooth scrolling for navigation
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
+        // Show home page after 10 seconds
+        setTimeout(() => {
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('home-page').style.display = 'flex';
+        }, 10000);
 
-            // Button ripple effect
-            document.querySelectorAll('.btn').forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // Create ripple effect
-                    const ripple = document.createElement('span');
-                    ripple.classList.add('ripple-effect');
-                    this.appendChild(ripple);
-                    
-                    // Remove ripple after animation
-                    setTimeout(() => {
-                        ripple.remove();
-                    }, 600);
-                });
-            });
+        document.getElementById('goToLogin').addEventListener('click', function() {
+            document.getElementById('home-page').style.display = 'none';
+            document.getElementById('login-page').style.display = 'flex';
         });
 
-        // Typewriter effect for tagline
-        const tagline = document.querySelector('.tagline');
-        if (tagline) {
-            const text = tagline.textContent;
-            tagline.textContent = '';
-            
-            let i = 0;
-            const typeWriter = setInterval(() => {
-                if (i < text.length) {
-                    tagline.textContent += text.charAt(i);
-                    i++;
-                } else {
-                    clearInterval(typeWriter);
-                }
-            }, 50);
-        }
+        const loginBtn = document.getElementById('loginBtn');
+        const form = document.querySelector('form');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            loginBtn.classList.add('loading');
+            loginBtn.disabled = true;
+
+            setTimeout(() => {
+                loginBtn.classList.remove('loading');
+                loginBtn.querySelector('.btn-text').style.display = 'none';
+                loginBtn.querySelector('.arrow').style.display = 'none';
+                loginBtn.querySelector('.checkmark').style.display = 'block';
+                loginBtn.classList.add('success');
+
+                setTimeout(() => {
+                    document.getElementById('login-page').style.display = 'none';
+                    document.getElementById('home-page').style.display = 'flex';
+                    form.reset();
+                    loginBtn.classList.remove('success');
+                    loginBtn.querySelector('.btn-text').style.display = 'inline-block';
+                    loginBtn.querySelector('.arrow').style.display = 'block';
+                    loginBtn.querySelector('.checkmark').style.display = 'none';
+                    loginBtn.disabled = false;
+
+                    alert('ඔබ සාර්ථකව ලොගින් වී ඇත!');
+                }, 2000);
+            }, 3000);
+        });
     </script>
 </body>
 </html>
